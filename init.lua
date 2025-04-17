@@ -10,5 +10,5 @@ vim.api.nvim_create_autocmd("User", {
     require("config.completion").setup()
     require("config.fidget").setup()
     require("config.treesitter").setup()
-  end
+  end,
 })

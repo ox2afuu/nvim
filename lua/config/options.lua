@@ -1,6 +1,6 @@
 -- Enable expression folding via treesitter
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpre()'
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpre()"
 vim.o.foldlevel = 99
 
 -- Replace and expand tabs with spaces

@@ -1,4 +1,4 @@
-  return {
+return {
   {
     -- project detection & Telescope integration
     "ahmedkhalf/project.nvim",

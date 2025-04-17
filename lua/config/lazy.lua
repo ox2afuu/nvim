@@ -33,7 +33,7 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
   git = {
-  -- Correct SSH format with a colon
+    -- Correct SSH format with a colon
     url_format = "git@github.com:%s.git",
   },
 })

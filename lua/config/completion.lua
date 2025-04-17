@@ -2,22 +2,22 @@ local M = {}
 
 function M.setup()
   -- Add error handling for required modules
-  local status_cmp, cmp = pcall(require, 'cmp')
+  local status_cmp, cmp = pcall(require, "cmp")
   if not status_cmp then
     vim.notify("nvim-cmp not found!", vim.log.levels.WARN)
     return
   end
-  
-  local status_luasnip, luasnip = pcall(require, 'luasnip')
+
+  local status_luasnip, luasnip = pcall(require, "luasnip")
   if not status_luasnip then
     vim.notify("LuaSnip not found! Completion setup incomplete.", vim.log.levels.WARN)
     return
   end
-  
+
   -- Continue with setup after ensuring required plugins are available
   -- Load friendly-snippets
   require("luasnip.loaders.from_vscode").lazy_load()
-  
+
   cmp.setup({
     snippet = {
       expand = function(args)
@@ -25,12 +25,12 @@ function M.setup()
       end,
     },
     mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item
-      ['<Tab>'] = cmp.mapping(function(fallback)
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
@@ -38,8 +38,8 @@ function M.setup()
         else
           fallback()
         end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
@@ -47,14 +47,14 @@ function M.setup()
         else
           fallback()
         end
-      end, { 'i', 's' }),
+      end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' },
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
     }, {
-      { name = 'buffer' },
-      { name = 'path' },
+      { name = "buffer" },
+      { name = "path" },
     }),
     formatting = {
       format = function(entry, vim_item)
@@ -86,8 +86,8 @@ function M.setup()
           Operator = "󰆕",
           TypeParameter = "",
         }
-        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-        
+        vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
+
         -- Add source indication
         vim_item.menu = ({
           nvim_lsp = "[LSP]",
@@ -95,9 +95,9 @@ function M.setup()
           buffer = "[Buffer]",
           path = "[Path]",
         })[entry.source.name]
-        
+
         return vim_item
-      end
+      end,
     },
     window = {
       documentation = {
@@ -112,30 +112,30 @@ function M.setup()
   })
 
   -- Set configuration for specific filetype
-  cmp.setup.filetype('gitcommit', {
+  cmp.setup.filetype("gitcommit", {
     sources = cmp.config.sources({
-      { name = 'git' },
+      { name = "git" },
     }, {
-      { name = 'buffer' },
-    })
+      { name = "buffer" },
+    }),
   })
-  
+
   -- Use buffer source for `/` and `?` (you can enable this if needed)
-  cmp.setup.cmdline({ '/', '?' }, {
+  cmp.setup.cmdline({ "/", "?" }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'buffer' }
-    }
+      { name = "buffer" },
+    },
   })
-  
+
   -- Use cmdline & path source for ':' (you can enable this if needed)
-  cmp.setup.cmdline(':', {
+  cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' }
+      { name = "path" },
     }, {
-      { name = 'cmdline' }
-    })
+      { name = "cmdline" },
+    }),
   })
 end
 
